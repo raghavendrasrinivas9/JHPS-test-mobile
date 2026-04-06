@@ -29,8 +29,8 @@ function openPDFViewer(pdfUrl, title) {
     // 3. Render the Viewer Frame
     area.innerHTML = `
         <div class="flex flex-col h-full animate-fade-in bg-white overflow-hidden" style="height: 100%;">
-            <div class="flex items-center justify-between p-3 bg-orange-800 text-white z-10 shadow-md shrink-0">
-                <button onclick="closePDFViewer()" class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-lg transition-all text-[10px] font-bold">
+            <div class="flex items-center justify-between p-3 bg-orange-800 text-blue z-10 shadow-md shrink-0">
+                <button onclick="closePDFViewer()" class="flex items-center gap-2 bg-blue/20 hover:bg-blue/30 px-3 py-1.5 rounded-lg transition-all text-[10px] font-bold">
                     <i class="fa-solid fa-arrow-left"></i>
                     <span>BACK</span>
                 </button>
