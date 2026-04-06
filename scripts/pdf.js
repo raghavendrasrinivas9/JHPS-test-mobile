@@ -1,5 +1,5 @@
 /* --- PDF VIEWER ENGINE --- */
-window.pdfViewerActive = false;
+window.pdfViewerActive = true;
 
 function openPDFViewer(pdfUrl, title) {
     if (!pdfUrl || pdfUrl === "#") {
@@ -11,11 +11,8 @@ function openPDFViewer(pdfUrl, title) {
     const area = document.getElementById('contentArea');
     const topNav = document.getElementById('topNav');
     
-    // Hide top navigation while reading
     if(topNav) topNav.style.display = "none";
 
-    // 1. Create Absolute URL for the Proxy
-    // GitHub Pages needs the full path to "see" the file
     let absoluteUrl = pdfUrl;
     if (!pdfUrl.startsWith('http')) {
         const loc = window.location;
@@ -23,52 +20,39 @@ function openPDFViewer(pdfUrl, title) {
         absoluteUrl = root + pdfUrl;
     }
 
-    // 2. Use Google's PDF-to-HTML Proxy URL
-    const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
+    // Use &rm=minimal to reduce Google Viewer chrome/pop-out options
+    const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true&rm=minimal`;
 
-    // 3. Render the Viewer Frame
-    /* --- Update the area.innerHTML part of openPDFViewer --- */
-/* --- Update the area.innerHTML part of openPDFViewer --- */
-	area.innerHTML = `
-		<div class="flex flex-col h-full bg-white overflow-hidden animate-fade-in" style="height: 100vh; height: 100dvh;">
-			<div class="flex items-center justify-between p-3 bg-orange-800 text-white z-10 shadow-md shrink-0">
-				<button onclick="closePDFViewer()" class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-lg transition-all text-[10px] font-bold">
-					<i class="fa-solid fa-arrow-left"></i>
-					<span>BACK</span>
-				</button>
-				<h3 class="font-bold text-[10px] uppercase tracking-widest truncate px-2 flex-1 text-center">${title}</h3>
-				<a href="${absoluteUrl}" target="_blank" download class="p-2 bg-orange-700 rounded-lg hover:bg-orange-600 transition">
-					<i class="fa-solid fa-download text-sm"></i>
-				</a>
-			</div>
-			
-			<div class="flex-1 bg-gray-100 relative w-full overflow-hidden">
-				<div id="pdfLoading" class="absolute inset-0 flex items-center justify-center bg-white z-0">
-					<div class="flex flex-col items-center gap-3">
-						<i class="fa-solid fa-dharmachakra fa-spin text-orange-500 text-3xl"></i>
-						<span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Loading Sacred Text...</span>
-					</div>
-				</div>
-				
-				<iframe 
-					src="${viewerUrl}" 
-					class="w-full h-full border-none relative z-10"
-					onload="document.getElementById('pdfLoading').style.display='none';"
-					style="height: 100%; width: 100%; border: none;">
-				</iframe>
-			</div>
-		</div>
-	`;    
+    area.innerHTML = `
+        <div class="flex flex-col h-full bg-white overflow-hidden animate-fade-in" style="height: 100vh; height: 100dvh;">
+            <div class="flex items-center justify-between p-3 bg-orange-800 text-white z-10 shadow-md shrink-0">
+                <button onclick="closePDFViewer()" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl transition-all text-[11px] font-black shadow-lg border border-blue-400">
+                    <i class="fa-solid fa-chevron-left"></i>
+                    <span>BACK</span>
+                </button>
+                <h3 class="font-bold text-[10px] uppercase tracking-widest truncate px-4 flex-1 text-center text-orange-100">${title}</h3>
+                <a href="${absoluteUrl}" target="_blank" download class="p-2 bg-orange-700 rounded-lg hover:bg-orange-600 transition">
+                    <i class="fa-solid fa-download text-sm"></i>
+                </a>
+            </div>
+            
+            <div class="flex-1 bg-gray-100 relative w-full overflow-hidden">
+                <div id="pdfLoading" class="absolute inset-0 flex items-center justify-center bg-white z-0">
+                    <div class="flex flex-col items-center gap-3">
+                        <i class="fa-solid fa-dharmachakra fa-spin text-orange-500 text-3xl"></i>
+                        <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Loading...</span>
+                    </div>
+                </div>
+                
+                <iframe 
+                    src="${viewerUrl}" 
+                    class="w-full h-full border-none relative z-50"
+                    onload="document.getElementById('pdfLoading').style.display='none';"
+                    style="height: 100%; width: 100%; border: none;">
+                </iframe>
+            </div>
+        </div>
+    `;
+    
     area.scrollTop = 0;
-}
-
-function closePDFViewer() {
-    window.pdfViewerActive = false;
-    // Restore the Top Nav if the tab requires it
-    const noNavTabs = ["contact", "bhajana", "about", "library"];
-    if (!noNavTabs.includes(window.activeTab)) {
-        const topNav = document.getElementById('topNav');
-        if(topNav) topNav.style.display = "flex";
-    }
-    render(); // Return to the previous list view
 }
