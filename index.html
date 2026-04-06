@@ -168,9 +168,12 @@
 			border: none;
 			background: #f3f4f6; /* Gray background while loading */
 		}
-		/* Fix: Prevent padding around the PDF iframe */
+		/* Add this to your style block */
 			#contentArea:has(.animate-fade-in) {
 				padding: 0 !important;
+				overflow: hidden !important; /* This is CRITICAL for mobile PDF viewing */
+				height: 100% !important;
+				max-height: 100% !important;
 			}
 		
 		
