@@ -197,75 +197,7 @@ function toggleAudio() {
     }
 }
 
-/* ================================================================
-   FINAL PDF Viewer Logic (GitHub & Mobile App Optimized)
-================================================================ */
-/* --- UPDATED PDF Viewer Logic (Mobile & App Optimized) --- */
-function openPDFViewer(pdfUrl, title) {
-    if (!pdfUrl || pdfUrl === "#") {
-        alert("This PDF is coming soon!");
-        return;
-    }
 
-    // Convert relative GitHub paths to absolute URLs if necessary
-    // If your PDF is in 'downloads/file.pdf', it becomes 'https://yourname.github.io/reponame/downloads/file.pdf'
-    let absoluteUrl = pdfUrl;
-    if (!pdfUrl.startsWith('http')) {
-        const loc = window.location;
-        const root = loc.protocol + "//" + loc.host + loc.pathname.replace('index.html', '');
-        absoluteUrl = root + pdfUrl;
-    }
-
-    const area = document.getElementById('contentArea');
-    if (!area) return;
-
-    // We use Google Docs Viewer to proxy the PDF so it renders inside the iframe on mobile
-    const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
-
-    area.innerHTML = `
-        <div class="flex flex-col h-full animate-fade-in bg-white overflow-hidden">
-            <div class="flex items-center justify-between p-3 bg-orange-800 text-blue z-10 shadow-md">
-                <button onclick="render()" class="flex items-center gap-2 bg-blue/20 hover:bg-blue/30 px-3 py-1.5 rounded-lg transition-all text-xs font-bold">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>BACK</span>
-                </button>
-                <h3 class="font-bold text-[10px] uppercase tracking-widest truncate px-2 flex-1 text-center">${title}</h3>
-                <a href="${absoluteUrl}" target="_blank" download class="p-2 bg-orange-700 rounded-lg hover:bg-orange-600 transition">
-                    <i class="fa-solid fa-download text-sm"></i>
-                </a>
-            </div>
-            
-            <div class="flex-grow bg-gray-100 relative">
-                <div id="pdfLoading" class="absolute inset-0 flex items-center justify-center bg-gray-50 z-0">
-                    <div class="flex flex-col items-center gap-2">
-                        <i class="fa-solid fa-circle-notch fa-spin text-orange-500 text-2xl"></i>
-                        <span class="text-xs text-gray-400 font-medium">Loading Sacred Text...</span>
-                    </div>
-                </div>
-                <iframe 
-                    src="${viewerUrl}" 
-                    class="absolute inset-0 w-full h-full border-none z-10"
-                    onload="document.getElementById('pdfLoading').style.display='none';"
-                    style="width: 100%; height: 100%;">
-                </iframe>
-            </div>
-        </div>
-    `;
-    
-    area.scrollTop = 0;
-}
-
-function closePDFViewer() {
-    // Re-trigger the main render to go back to the list
-    if (typeof render === 'function') {
-        render();
-    }
-}
-
-function closePDFViewer() {
-    // Simply return to the current view (Library, Stotra, etc.)
-    render(); 
-}
 
 /* ================================================================
    7. UI HELPERS
