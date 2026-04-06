@@ -168,6 +168,11 @@
 			border: none;
 			background: #f3f4f6; /* Gray background while loading */
 		}
+		/* Fix: Prevent padding around the PDF iframe */
+			#contentArea:has(.animate-fade-in) {
+				padding: 0 !important;
+			}
+		
 		
         /* --- MOBILE MENU ALIGNMENT --- */
         @media (max-width: 767px) {
@@ -333,6 +338,7 @@
 <script src="scripts/seva.js"></script>
 <script src="scripts/gallery.js"></script> 
 <script src="scripts/library.js"></script>
+<script src="scripts/pdf.js"></script>
 <script src="scripts/main-logic.js"></script>
 
 <script>
