@@ -168,6 +168,25 @@
 			border: none;
 			background: #f3f4f6; /* Gray background while loading */
 		}
+		/* This hides the top-right 'pop-out' arrow area of the Google PDF iframe */
+		.pdf-container-wrapper {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		/* Invisible shield to prevent clicking the pop-out button in the iframe corner */
+		.pdf-shield {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 50px;
+			height: 50px;
+			z-index: 100;
+			background: transparent;
+		}
+		
 		/* Add this to your style block */
 			#contentArea:has(.animate-fade-in) {
 				padding: 0 !important;
