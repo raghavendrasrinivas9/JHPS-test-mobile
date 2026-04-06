@@ -194,7 +194,16 @@
 				height: 100% !important;
 				max-height: 100% !important;
 			}
-		
+		/* Prevent the main container from scrolling while the PDF is open */
+		body:has(.animate-fade-in) #contentArea {
+			overflow: hidden !important;
+			touch-action: none;
+		}
+
+		/* Fix for smooth PDF scrolling on iPhones */
+		iframe {
+			-webkit-overflow-scrolling: touch !important;
+		}
 		
         /* --- MOBILE MENU ALIGNMENT --- */
         @media (max-width: 767px) {
